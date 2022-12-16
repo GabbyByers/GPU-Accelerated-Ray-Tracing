@@ -47,7 +47,5 @@ int main() {
         texture.loadFromImage(scene);
         window.draw(&quad[0], quad.size(), sf::Quads, &texture);
         window.display();
-    }
-    
-    return 0;
+    } return 0;
 }
