@@ -8,9 +8,9 @@ typedef unsigned char Uint8;
 void perPixelCalculation(Uint8* scene, unsigned int width, unsigned int height);
 
 int main() {
-    unsigned int screen_width = 1000;
-    unsigned int screen_height = 1000;
-    sf::RenderWindow window(sf::VideoMode(screen_width, screen_height), "GPU Accelerated Ray Tracing", sf::Style::Close);
+    unsigned int screen_width = 1920;
+    unsigned int screen_height = 1080;
+    sf::RenderWindow window(sf::VideoMode(screen_width, screen_height), "GPU Accelerated Ray Tracing", sf::Style::Fullscreen | sf::Style::Close);
     sf::Event event;
     
     vector<sf::Vertex> quad;

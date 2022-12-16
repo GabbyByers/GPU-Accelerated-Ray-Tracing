@@ -1,8 +1,22 @@
 ﻿#include "cuda_runtime.h"
 #include "device_launch_parameters.h"
 #include <math.h>
+#include "vec3.cuh"
 
 typedef unsigned char Uint8;
+
+//__device__ class vec3 {
+//public:
+//    double x = 0.0;
+//    double y = 0.0;
+//    double z = 0.0;
+//
+//    __device__ vec3(double _x, double _y, double _z) {
+//        x = _x;
+//        y = _y;
+//        z = _z;
+//    }
+//};
 
 __global__ void kernel(Uint8* ptr, unsigned int size, unsigned int width) {
     unsigned int i = (blockIdx.x * blockDim.x) + threadIdx.x;
@@ -17,8 +31,11 @@ __global__ void kernel(Uint8* ptr, unsigned int size, unsigned int width) {
         double u = x / static_cast<double>(width);
         double v = y / static_cast<double>(size / width);
 
-        r = u * 255;
-        b = v * 255;
+        vec3 ray(u, 0.0, v);
+
+        r = ray.x * 255;
+        g = ray.y * 255;
+        b = ray.z * 255;
     }
 }
 
