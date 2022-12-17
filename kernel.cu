@@ -25,10 +25,6 @@ __global__ void kernel(camera& camera, Uint8* ptr, unsigned int size, unsigned i
 
     vec3 pixel(u, v, 0.0);
     ray camera_ray(camera.position, camera.direction.add(pixel));
-
-    //vec3 ray(u, v, 0.0);
-    //r = 128 + (ray.x * 127);
-    //b = 128 + (ray.y * 127);
 }
 
 void perPixelCalculation(camera& camera, Uint8* scene, unsigned int size, unsigned int width) {
