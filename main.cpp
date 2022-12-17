@@ -1,16 +1,16 @@
 #include "SFML\Graphics.hpp"
 #include <iostream>
 #include <vector>
+#include "kernel.cuh"
+#include "vec3.cuh"
+#include "camera.cuh"
 using std::cout;
 using std::vector;
 
-typedef unsigned char Uint8;
-void perPixelCalculation(Uint8* scene, unsigned int width, unsigned int height);
-
 int main() {
-    unsigned int screen_width = 1920;
-    unsigned int screen_height = 1080;
-    sf::RenderWindow window(sf::VideoMode(screen_width, screen_height), "GPU Accelerated Ray Tracing", sf::Style::Fullscreen | sf::Style::Close);
+    unsigned int screen_width = 800;
+    unsigned int screen_height = 800;
+    sf::RenderWindow window(sf::VideoMode(screen_width, screen_height), "GPU Accelerated Ray Tracing", sf::Style::Close);
     sf::Event event;
     
     vector<sf::Vertex> quad;
@@ -29,19 +29,19 @@ int main() {
 
     sf::Texture texture;
 
+    camera camera;
+
     while (window.isOpen()) {
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
                 window.close();
             }
-            if (event.type == sf::Event::KeyPressed) {
-                if (event.key.code == sf::Keyboard::Escape) {
-                    window.close();
-                }
+            if (event.key.code == sf::Keyboard::Escape) {
+                window.close();
             }
         }
 
-        perPixelCalculation(pixels, size, width);
+        perPixelCalculation(camera, pixels, size, width);
 
         window.clear(sf::Color(0, 0, 0));
         texture.loadFromImage(scene);
