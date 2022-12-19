@@ -38,27 +38,13 @@ Uint8* gpuSetup(Uint8* cpu_ptr, unsigned int size) {
     return gpu_ptr;
 }
 
-void perPixelCalculation(camera& camera, Uint8* cpu_ptr, Uint8* gpu_ptr, unsigned int size, unsigned int width) {
+void gpuCalc(camera& camera, Uint8* cpu_ptr, Uint8* gpu_ptr, unsigned int size, unsigned int width) {
     unsigned int NUM_THREADS = 1024;
     unsigned int NUM_BLOCKS = (size + NUM_THREADS - 1) / NUM_THREADS;
     kernel <<<NUM_BLOCKS, NUM_THREADS>>> (camera, gpu_ptr, size, width);
 
     unsigned int bytes = size * 4;
     cudaMemcpy(cpu_ptr, gpu_ptr, bytes, cudaMemcpyDeviceToHost);
-    //cudaFree(gpu_ptr);
 }
 
-void theOldFunction(camera& camera, Uint8* cpu_ptr, unsigned int size, unsigned int width) {
-    unsigned int bytes = size * 4;
-    Uint8* gpu_ptr = nullptr;
-
-    cudaMalloc((void**)&gpu_ptr, bytes);
-    cudaMemcpy(gpu_ptr, cpu_ptr, bytes, cudaMemcpyHostToDevice);
-
-    unsigned int NUM_THREADS = 1024;
-    unsigned int NUM_BLOCKS = (size + NUM_THREADS - 1) / NUM_THREADS;
-    kernel << <NUM_BLOCKS, NUM_THREADS >> > (camera, gpu_ptr, size, width);
-
-    cudaMemcpy(cpu_ptr, gpu_ptr, bytes, cudaMemcpyDeviceToHost);
-    cudaFree(gpu_ptr);
-}
+void gpuFree(Uint8* gpu_ptr) { cudaFree(gpu_ptr); }

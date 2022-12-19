@@ -5,10 +5,10 @@
 
 typedef unsigned char Uint8;
 
-void perPixelCalculation(camera& camera, Uint8* cpu_ptr, Uint8* gpu_ptr, unsigned int width, unsigned int height);
-
 Uint8* gpuSetup(Uint8* cpu_ptr, unsigned int size);
 
-void theOldFunction(camera& camera, Uint8* cpu_ptr, unsigned int size, unsigned int width);
+void gpuCalc(camera& camera, Uint8* cpu_ptr, Uint8* gpu_ptr, unsigned int width, unsigned int height);
+
+void gpuFree(Uint8* gpu_ptr);
 
 #endif
