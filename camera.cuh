@@ -8,9 +8,9 @@ public:
 	vec3 position;
 	vec3 direction;
 
-	__host__ __device__ camera();
+	camera();
 
-	__host__ __device__ camera(vec3& _position, vec3& _direction);
+	camera(vec3& _position, vec3& _direction);
 };
 
 #endif

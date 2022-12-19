@@ -8,8 +8,6 @@
 #include "sphere.cuh"
 #include "Enviroment.cuh"
 
-
-
 __global__ void kernel(Enviroment enviroment, camera camera, Uint8* gpu_ptr, unsigned int size, unsigned int width) {
     unsigned int i = (blockIdx.x * blockDim.x) + threadIdx.x;
     if (i < size) {

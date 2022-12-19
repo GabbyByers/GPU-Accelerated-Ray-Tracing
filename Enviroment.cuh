@@ -3,7 +3,6 @@
 
 #include "cuda_runtime.h"
 #include "sphere.cuh"
-#include <string.h>
 
 class Enviroment {
 public:

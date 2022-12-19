@@ -9,9 +9,9 @@ public:
     vec3 origin;
     vec3 direction;
 
-    Uint8 r = 255;
-    Uint8 g = 255;
-    Uint8 b = 255;
+    Uint8 r = 0;
+    Uint8 g = 0;
+    Uint8 b = 0;
 
     __device__ ray();
 

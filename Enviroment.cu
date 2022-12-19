@@ -1,4 +1,5 @@
 #include "Enviroment.cuh"
+#include <string.h>
 
 Enviroment::Enviroment() {}
 
@@ -23,3 +24,4 @@ void Enviroment::destroy() {
     delete[] cpu_spheres;
     cudaFree(gpu_spheres);
 }
+

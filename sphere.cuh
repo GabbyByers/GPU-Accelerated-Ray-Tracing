@@ -8,12 +8,9 @@ public:
 	double radius = 1.0;
 	vec3 position;
 
-	__host__ __device__ Sphere() {}
+	Sphere();
 
-	__host__ __device__ Sphere(vec3 _position, double _radius) {
-		position = _position;
-		radius = _radius;
-	}
+	Sphere(vec3 _position, double _radius);
 };
 
 #endif

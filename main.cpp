@@ -16,7 +16,7 @@ int main() {
     sf::RenderWindow window(sf::VideoMode(screen_width, screen_height), "GPU Accelerated Ray Tracing", sf::Style::Close);
     
     Scene scene(screen_width, screen_height);
-    camera camera;
+    camera camera(vec3(), vec3(0.0, 0.0, 2.0));
     
     Uint8* cpu_ptr = const_cast<Uint8*>(scene.image.getPixelsPtr());
     Uint8* gpu_ptr = gpuSetup(cpu_ptr, scene.size);
@@ -26,9 +26,6 @@ int main() {
     enviroment.addSphere(vec3(-1.0, 0.0, 4.0), 1.2);
     enviroment.addSphere(vec3( 0.0, 0.0, 4.0), 1.2);
     enviroment.addSphere(vec3( 1.0, 0.0, 4.0), 1.2);
-    enviroment.addSphere(vec3( 2.0, 0.0, 4.0), 5.5);
-    enviroment.addSphere(vec3( 3.0, 0.0, 4.0), 10.5);
-    enviroment.addSphere(vec3( 4.0, 0.0, 4.0), 15.5);
 
     sf::Event event;
     while (window.isOpen()) {
