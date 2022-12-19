@@ -5,12 +5,14 @@
 #include "kernel.cuh"
 #include "vec3.cuh"
 #include "camera.cuh"
+#include "sphere.cuh"
+#include "Enviroment.cuh"
 using std::cout;
 using std::vector;
 
 int main() {
     unsigned int screen_width = 800;
-    unsigned int screen_height = 800;
+    unsigned int screen_height = 400;
     sf::RenderWindow window(sf::VideoMode(screen_width, screen_height), "GPU Accelerated Ray Tracing", sf::Style::Close);
     
     Scene scene(screen_width, screen_height);
@@ -19,6 +21,15 @@ int main() {
     Uint8* cpu_ptr = const_cast<Uint8*>(scene.image.getPixelsPtr());
     Uint8* gpu_ptr = gpuSetup(cpu_ptr, scene.size);
     
+
+    Enviroment enviroment;
+    enviroment.addSphere(vec3(-1.0, 0.0, 4.0), 1.2);
+    enviroment.addSphere(vec3( 0.0, 0.0, 4.0), 1.2);
+    enviroment.addSphere(vec3( 1.0, 0.0, 4.0), 1.2);
+    enviroment.addSphere(vec3( 2.0, 0.0, 4.0), 5.5);
+    enviroment.addSphere(vec3( 3.0, 0.0, 4.0), 10.5);
+    enviroment.addSphere(vec3( 4.0, 0.0, 4.0), 15.5);
+
     sf::Event event;
     while (window.isOpen()) {
         while (window.pollEvent(event)) {
@@ -30,10 +41,11 @@ int main() {
             }
         }
 
-        gpuCalc(camera, cpu_ptr, gpu_ptr, scene.size, scene.width);
+        gpuCalc(enviroment, camera, cpu_ptr, gpu_ptr, scene.size, scene.width);
         scene.draw(window);
     }
     
     gpuFree(gpu_ptr);
+    enviroment.destroy();
     return 69;
 }
