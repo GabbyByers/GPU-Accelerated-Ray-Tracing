@@ -1,6 +1,7 @@
 #include "SFML\Graphics.hpp"
 #include <iostream>
 #include <vector>
+#include <memory>
 #include "kernel.cuh"
 #include "vec3.cuh"
 #include "camera.cuh"
@@ -8,10 +9,12 @@ using std::cout;
 using std::vector;
 
 int main() {
-    unsigned int screen_width = 800;
-    unsigned int screen_height = 800;
-    sf::RenderWindow window(sf::VideoMode(screen_width, screen_height), "GPU Accelerated Ray Tracing", sf::Style::Close);
+    unsigned int screen_width = 1920;
+    unsigned int screen_height = 1080;
+    sf::RenderWindow window(sf::VideoMode(screen_width, screen_height), "GPU Accelerated Ray Tracing", sf::Style::Fullscreen | sf::Style::Close);
     sf::Event event;
+    sf::Texture texture;
+    camera camera;
     
     vector<sf::Vertex> quad;
     float w = static_cast<float>(screen_width);
@@ -23,14 +26,12 @@ int main() {
     
     sf::Image scene;
     scene.create(screen_width, screen_height, sf::Color(0, 0, 0, 255));
-    Uint8* pixels = const_cast<Uint8*>(scene.getPixelsPtr());
     unsigned int size = static_cast<unsigned int>(scene.getSize().x) * static_cast<unsigned int>(scene.getSize().y);
     unsigned int width = static_cast<unsigned int>(scene.getSize().x);
 
-    sf::Texture texture;
-
-    camera camera;
-
+    Uint8* cpu_ptr = const_cast<Uint8*>(scene.getPixelsPtr());
+    Uint8* gpu_ptr = gpuSetup(cpu_ptr, size);
+    
     while (window.isOpen()) {
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
@@ -41,7 +42,9 @@ int main() {
             }
         }
 
-        perPixelCalculation(camera, pixels, size, width);
+        perPixelCalculation(camera, cpu_ptr, gpu_ptr, size, width);
+
+        //theOldFunction(camera, cpu_ptr, size, width);
 
         window.clear(sf::Color(0, 0, 0));
         texture.loadFromImage(scene);
