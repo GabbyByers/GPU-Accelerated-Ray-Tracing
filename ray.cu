@@ -1,5 +1,4 @@
 #include "ray.cuh"
-#include <float.h>
 
 __device__ ray::ray() {}
 
@@ -35,9 +34,11 @@ __device__ float ray::intersectSphere(const Sphere& sphere) {
     vec3 B = direction;
     vec3 C = sphere.position;
 
+    float r = sphere.radius;
+
     float a = (B.x * B.x) + (B.y * B.y) + (B.z * B.z);
     float b = (2.0f * A.x * B.x) + (-2.0f * B.x * C.x) + (2.0f * A.y * B.y) + (-2.0f * B.y * C.y) + (2.0f * A.z * B.z) + (-2.0f * B.z * C.z);
-    float c = (A.x * A.x) + (-2.0f * A.x * C.x) + (C.x * C.x) + (A.y * A.y) + (-2.0f * A.y * C.y) + (C.y * C.y) + (A.z * A.z) + (-2.0f * A.z * C.z) + (C.z * C.z);
+    float c = (A.x * A.x) + (-2.0f * A.x * C.x) + (C.x * C.x) + (A.y * A.y) + (-2.0f * A.y * C.y) + (C.y * C.y) + (A.z * A.z) + (-2.0f * A.z * C.z) + (C.z * C.z) - (r * r);
     
     float discriminant = (b * b) + (-4.0f * a * c);
     if (discriminant <= 0) { return FLT_MAX; }
