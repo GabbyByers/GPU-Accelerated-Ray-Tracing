@@ -3,7 +3,7 @@
 
 Enviroment::Enviroment() {}
 
-void Enviroment::addSphere(vec3& position, double radius) {
+void Enviroment::addSphere(Sphere sphere) {
     num_spheres++;
 
     // CPU
@@ -11,8 +11,7 @@ void Enviroment::addSphere(vec3& position, double radius) {
     memcpy(new_cpu_spheres, cpu_spheres, sizeof(Sphere) * (num_spheres - 1));
     delete[] cpu_spheres;
     cpu_spheres = new_cpu_spheres;
-    Sphere new_sphere(position, radius);
-    cpu_spheres[num_spheres - 1] = new_sphere;
+    cpu_spheres[num_spheres - 1] = sphere;
 
     // GPU
     cudaFree(gpu_spheres);
@@ -24,4 +23,3 @@ void Enviroment::destroy() {
     delete[] cpu_spheres;
     cudaFree(gpu_spheres);
 }
-

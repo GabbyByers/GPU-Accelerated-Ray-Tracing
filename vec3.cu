@@ -2,12 +2,12 @@
 
 __host__ __device__ vec3::vec3() {}
 
-__host__ __device__ vec3::vec3(double _x, double _y) {
+__host__ __device__ vec3::vec3(float _x, float _y) {
     x = _x;
     y = _y;
 }
 
-__host__ __device__ vec3::vec3(double _x, double _y, double _z) {
+__host__ __device__ vec3::vec3(float _x, float _y, float _z) {
     x = _x;
     y = _y;
     z = _z;

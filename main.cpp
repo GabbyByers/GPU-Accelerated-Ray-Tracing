@@ -11,21 +11,22 @@ using std::cout;
 using std::vector;
 
 int main() {
-    unsigned int screen_width = 800;
-    unsigned int screen_height = 400;
+    unsigned int screen_width = 1000;
+    unsigned int screen_height = 500;
     sf::RenderWindow window(sf::VideoMode(screen_width, screen_height), "GPU Accelerated Ray Tracing", sf::Style::Close);
     
     Scene scene(screen_width, screen_height);
-    camera camera(vec3(), vec3(0.0, 0.0, 2.0));
+    vec3 cam_pos(0.0f, 0.0f, 0.0f);
+    vec3 cam_dir(0.0f, 0.0f, 2.0f);
+    camera camera(cam_pos, cam_dir);
     
     Uint8* cpu_ptr = const_cast<Uint8*>(scene.image.getPixelsPtr());
     Uint8* gpu_ptr = gpuSetup(cpu_ptr, scene.size);
     
-
     Enviroment enviroment;
-    enviroment.addSphere(vec3(-1.0, 0.0, 4.0), 1.2);
-    enviroment.addSphere(vec3( 0.0, 0.0, 4.0), 1.2);
-    enviroment.addSphere(vec3( 1.0, 0.0, 4.0), 1.2);
+    enviroment.addSphere(Sphere(vec3(-1.0f, 0.0f, 4.0f), 1.2f, 255, 0, 0));
+    enviroment.addSphere(Sphere(vec3( 0.0f, 0.0f, 4.0f), 1.2f, 0, 255, 0));
+    enviroment.addSphere(Sphere(vec3( 1.0f, 0.0f, 4.0f), 1.2f, 0, 0, 255));
 
     sf::Event event;
     while (window.isOpen()) {

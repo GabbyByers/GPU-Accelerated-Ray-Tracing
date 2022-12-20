@@ -10,7 +10,7 @@ public:
 
 	camera();
 
-	camera(vec3& _position, vec3& _direction);
+	camera(vec3 _position, vec3 _direction);
 };
 
 #endif

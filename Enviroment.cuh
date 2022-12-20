@@ -13,7 +13,7 @@ public:
 
     Enviroment();
 
-    void addSphere(vec3& position, double radius);
+    void addSphere(Sphere sphere);
 
     void destroy();
 };

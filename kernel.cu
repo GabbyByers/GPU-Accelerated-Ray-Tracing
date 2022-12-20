@@ -12,20 +12,20 @@ __global__ void kernel(Enviroment enviroment, camera camera, Uint8* gpu_ptr, uns
     unsigned int i = (blockIdx.x * blockDim.x) + threadIdx.x;
     if (i < size) {
         Uint8* RGBA = gpu_ptr + (i * 4);
-        Uint8& r = *RGBA;
-        Uint8& g = *++RGBA;
-        Uint8& b = *++RGBA;
+        Uint8& r = *   RGBA;
+        Uint8& g = * ++RGBA;
+        Uint8& b = * ++RGBA;
 
         unsigned int x = i % width;
         unsigned int y = i / width;
 
-        double u = x / static_cast<double>(width);
-        double v = y / static_cast<double>(size / width);
+        float u = x / static_cast<float>(width);
+        float v = y / static_cast<float>(size / width);
 
-        u = (2.0 * u) - 1.0;
-        v = (2.0 * v) - 1.0;
+        u = (2.0f * u) - 1.0f;
+        v = (2.0f * v) - 1.0f;
 
-        u = u * (width / static_cast<double>(size / width));
+        u = u * (width / static_cast<float>(size / width));
         v = -v;
 
         vec3 UV(u, v);
@@ -50,7 +50,7 @@ Uint8* gpuSetup(Uint8* cpu_ptr, unsigned int size) {
 }
 
 void gpuCalc(Enviroment& enviroment, camera& camera, Uint8* cpu_ptr, Uint8* gpu_ptr, unsigned int size, unsigned int width) {
-    unsigned int NUM_THREADS = 1024;
+    unsigned int NUM_THREADS = 256; // smaller == more memory && bigger == faster && must be a multiple of 32
     unsigned int NUM_BLOCKS = (size + NUM_THREADS - 1) / NUM_THREADS;
     kernel <<<NUM_BLOCKS, NUM_THREADS>>> (enviroment, camera, gpu_ptr, size, width);
 

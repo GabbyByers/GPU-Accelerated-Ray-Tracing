@@ -3,6 +3,7 @@
 
 #include "vec3.cuh"
 #include "kernel.cuh"
+#include "sphere.cuh"
 
 class ray {
 public:
@@ -18,6 +19,8 @@ public:
     __device__ ray(vec3 _origin, vec3 _direction);
 
     __device__ void trace(const Sphere* gpu_spheres, unsigned int size);
+
+    __device__ float ray::intersectSphere(const Sphere& sphere);
 };
 
 #endif
