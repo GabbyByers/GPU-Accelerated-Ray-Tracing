@@ -1,19 +1,16 @@
 #include "ray.cuh"
 
-__device__ ray::ray() {}
+__host__ __device__ ray::ray() {}
 
-__device__ ray::ray(vec3 _origin, vec3 _direction) {
+__host__ __device__ ray::ray(vec3 _origin, vec3 _direction) {
     origin = _origin;
     direction = _direction;
 }
 
-__device__ void ray::trace(const Sphere* gpu_spheres, unsigned int size) {
+__host__ __device__ void ray::trace(const Sphere* gpu_spheres, unsigned int size) {
     
-    float dy = direction.y - origin.y;
-    float dxz = sqrt((direction.x - origin.x) * (direction.x - origin.x) + (direction.z - origin.z) * (direction.z - origin.z));
-    float slope = dy / dxz;
     r = 0;
-    g = 150 - slope * 100;
+    g = 180 - 75 * direction.y;
     b = 255;
 
     float current_t = FLT_MAX;
@@ -29,7 +26,7 @@ __device__ void ray::trace(const Sphere* gpu_spheres, unsigned int size) {
     }
 }
 
-__device__ float ray::intersectSphere(const Sphere& sphere) {
+__host__ __device__ float ray::intersectSphere(const Sphere& sphere) {
     vec3 A = origin;
     vec3 B = direction;
     vec3 C = sphere.position;

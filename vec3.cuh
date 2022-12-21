@@ -15,7 +15,7 @@ public:
 
     __host__ __device__ vec3(float _x, float _y, float _z);
 
-    __host__ __device__ vec3 add(vec3& vect);
+    __host__ __device__ vec3 add(vec3 vect);
 };
 
 #endif

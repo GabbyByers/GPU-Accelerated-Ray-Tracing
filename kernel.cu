@@ -28,9 +28,8 @@ __global__ void kernel(Enviroment enviroment, camera camera, Uint8* gpu_ptr, uns
         u = u * (width / static_cast<float>(size / width));
         v = -v;
 
-        vec3 UV(u, v);
         vec3 origin = camera.position;
-        vec3 direction = camera.position.add(camera.direction.add(UV));
+        vec3 direction = vec3(u, v, camera.depth);
         ray ray(origin, direction);
 
         ray.trace(enviroment.gpu_spheres, enviroment.num_spheres);
@@ -50,7 +49,7 @@ Uint8* gpuSetup(Uint8* cpu_ptr, unsigned int size) {
 }
 
 void gpuCalc(Enviroment& enviroment, camera& camera, Uint8* cpu_ptr, Uint8* gpu_ptr, unsigned int size, unsigned int width) {
-    unsigned int NUM_THREADS = 256; // smaller == more memory && bigger == faster && must be a multiple of 32
+    unsigned int NUM_THREADS = 512;
     unsigned int NUM_BLOCKS = (size + NUM_THREADS - 1) / NUM_THREADS;
     kernel <<<NUM_BLOCKS, NUM_THREADS>>> (enviroment, camera, gpu_ptr, size, width);
 

@@ -16,6 +16,8 @@ public:
     void addSphere(Sphere sphere);
 
     void destroy();
+
+    void updateSpheres();
 };
 
 #endif

@@ -23,3 +23,7 @@ void Enviroment::destroy() {
     delete[] cpu_spheres;
     cudaFree(gpu_spheres);
 }
+
+void Enviroment::updateSpheres(){
+    cudaMemcpy(gpu_spheres, cpu_spheres, sizeof(Sphere) * num_spheres, cudaMemcpyHostToDevice);
+}

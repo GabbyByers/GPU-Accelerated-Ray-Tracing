@@ -14,13 +14,13 @@ public:
     Uint8 g = 0;
     Uint8 b = 0;
 
-    __device__ ray();
+    __host__ __device__ ray();
 
-    __device__ ray(vec3 _origin, vec3 _direction);
+    __host__ __device__ ray(vec3 _origin, vec3 _direction);
 
-    __device__ void trace(const Sphere* gpu_spheres, unsigned int size);
+    __host__ __device__ void trace(const Sphere* gpu_spheres, unsigned int size);
 
-    __device__ float ray::intersectSphere(const Sphere& sphere);
+    __host__ __device__ float ray::intersectSphere(const Sphere& sphere);
 };
 
 #endif
