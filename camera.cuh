@@ -10,7 +10,7 @@ public:
 	vec3 real_direction;
 	float depth = 2.0f;
 
-	float rotation_matrix[3][3];
+	matrix rotation;
 
 	camera();
 

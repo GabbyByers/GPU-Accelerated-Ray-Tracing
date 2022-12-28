@@ -32,7 +32,7 @@ public:
     void draw(sf::RenderWindow& window, camera& camera, unsigned int size, unsigned int width, Sphere* cpu_spheres, unsigned int num) {
         string info;
         info += "Camera Position " + vec3ToString(camera.position) + "\n";
-        info += "Camera Direction" + vec3ToString(camera.direction) + "\n";
+        info += "Camera Direction" + vec3ToString(camera.base_direction) + "\n";
         
         // U V
         sf::Vector2i mouse = sf::Mouse::getPosition(window);

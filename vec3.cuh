@@ -2,6 +2,7 @@
 #define VEC3_CUH
 
 #include <cuda_runtime.h>
+#include "matrix.cuh"
 
 class vec3 {
 public:
@@ -17,7 +18,7 @@ public:
 
     __host__ __device__ vec3 add(vec3 vect);
 
-    __host__ __device__ vec3 vectorMatrixMultiplication(float matrix[][]);
+    __host__ __device__ vec3 vectorMatrixMultiplication(matrix rotation);
 };
 
 #endif

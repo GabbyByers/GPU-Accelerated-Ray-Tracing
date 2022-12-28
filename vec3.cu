@@ -21,7 +21,7 @@ __host__ __device__ vec3 vec3::add(vec3 vect) {
     return result;
 }
 
-__host__ __device__ vec3 vec3::vectorMatrixMultiplication(float matrix[][]) {
+__host__ __device__ vec3 vec3::vectorMatrixMultiplication(matrix roation) {
     vec3 result;
     // myself multiplied by the matrix
     return result;

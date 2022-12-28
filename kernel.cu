@@ -32,7 +32,7 @@ __global__ void kernel(Enviroment enviroment, camera camera, Uint8* gpu_ptr, uns
     vec3 origin = camera.position;
     vec3 base_direction = vec3(u, v, camera.depth);
 
-    vec3 real_direction = base_direction.vectorMatrixMultiplication(camera.rotation_matrix);
+    vec3 real_direction = base_direction.vectorMatrixMultiplication(camera.rotation);
     
     ray ray(origin, real_direction);
     ray.trace(enviroment.gpu_spheres, enviroment.num_spheres);
