@@ -20,3 +20,9 @@ __host__ __device__ vec3 vec3::add(vec3 vect) {
     result.z = z + vect.z;
     return result;
 }
+
+__host__ __device__ vec3 vec3::vectorMatrixMultiplication(float matrix[][]) {
+    vec3 result;
+    // myself multiplied by the matrix
+    return result;
+}

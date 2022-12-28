@@ -126,7 +126,7 @@ int main() {
         }
         enviroment.updateSpheres();
 
-        camera.control(0.015f);
+        camera.control(0.05f);
         gpuCalc(enviroment, camera, cpu_ptr, gpu_ptr, scene.size, scene.width);
         scene.draw(window);
         debugInformation.draw(window, camera, scene.size, scene.width, enviroment.cpu_spheres, enviroment.num_spheres);

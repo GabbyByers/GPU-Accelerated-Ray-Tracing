@@ -10,34 +10,36 @@
 
 __global__ void kernel(Enviroment enviroment, camera camera, Uint8* gpu_ptr, unsigned int size, unsigned int width) {
     unsigned int i = (blockIdx.x * blockDim.x) + threadIdx.x;
-    if (i < size) {
-        Uint8* RGBA = gpu_ptr + (i * 4);
-        Uint8& r = *   RGBA;
-        Uint8& g = * ++RGBA;
-        Uint8& b = * ++RGBA;
+    if (i >= size) { return; }
+    
+    Uint8* RGBA = gpu_ptr + (i * 4);
+    Uint8& r = *   RGBA;
+    Uint8& g = * ++RGBA;
+    Uint8& b = * ++RGBA;
 
-        unsigned int x = i % width;
-        unsigned int y = i / width;
+    unsigned int x = i % width;
+    unsigned int y = i / width;
 
-        float u = x / static_cast<float>(width);
-        float v = y / static_cast<float>(size / width);
+    float u = x / static_cast<float>(width);
+    float v = y / static_cast<float>(size / width);
 
-        u = (2.0f * u) - 1.0f;
-        v = (2.0f * v) - 1.0f;
+    u = (2.0f * u) - 1.0f;
+    v = (2.0f * v) - 1.0f;
 
-        u = u * (width / static_cast<float>(size / width));
-        v = -v;
+    u = u * (width / static_cast<float>(size / width));
+    v = -v;
 
-        vec3 origin = camera.position;
-        vec3 direction = vec3(u, v, camera.depth);
-        ray ray(origin, direction);
+    vec3 origin = camera.position;
+    vec3 base_direction = vec3(u, v, camera.depth);
 
-        ray.trace(enviroment.gpu_spheres, enviroment.num_spheres);
+    vec3 real_direction = base_direction.vectorMatrixMultiplication(camera.rotation_matrix);
+    
+    ray ray(origin, real_direction);
+    ray.trace(enviroment.gpu_spheres, enviroment.num_spheres);
 
-        r = ray.r;
-        g = ray.g;
-        b = ray.b;
-    }
+    r = ray.r;
+    g = ray.g;
+    b = ray.b;
 }
 
 Uint8* gpuSetup(Uint8* cpu_ptr, unsigned int size) {

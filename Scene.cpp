@@ -15,5 +15,4 @@ Scene::Scene(unsigned int screen_width, unsigned int screen_height) {
 void Scene::draw(sf::RenderWindow& window) {
     texture.loadFromImage(image);
     window.draw(&quad[0], quad.size(), sf::Quads, &texture);
-    //window.display();
 }
