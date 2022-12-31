@@ -1,8 +1,16 @@
 #ifndef MATRIX_CUH
 #define MATRIX_CUH
 
-struct matrix {
-	float a, b, c, d, e, f, g, h, i;
+#include "cuda_runtime.h"
+
+class matrix {
+public:
+    float** cpu_matrix = nullptr;
+    float** gpu_matrix = nullptr;
+
+    matrix();
+
+    void update();
 };
 
 #endif
