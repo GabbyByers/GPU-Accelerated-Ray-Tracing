@@ -8,7 +8,8 @@
 #include "sphere.cuh"
 #include "Enviroment.cuh"
 
-__global__ void kernel(Enviroment enviroment, camera camera, Uint8* gpu_ptr, unsigned int size, unsigned int width) {
+__global__ void kernel(Enviroment enviroment, camera camera, Uint8* gpu_ptr, unsigned int size, unsigned int width)
+{
     unsigned int i = (blockIdx.x * blockDim.x) + threadIdx.x;
     if (i >= size) { return; }
     
@@ -43,7 +44,8 @@ __global__ void kernel(Enviroment enviroment, camera camera, Uint8* gpu_ptr, uns
     b = ray.b;
 }
 
-Uint8* gpuSetup(Uint8* cpu_ptr, unsigned int size) {
+Uint8* gpuSetup(Uint8* cpu_ptr, unsigned int size)
+{
     unsigned int bytes = size * 4;
     Uint8* gpu_ptr = nullptr;
     cudaMalloc((void**)&gpu_ptr, bytes);
@@ -51,7 +53,8 @@ Uint8* gpuSetup(Uint8* cpu_ptr, unsigned int size) {
     return gpu_ptr;
 }
 
-void gpuCalc(Enviroment& enviroment, camera& camera, Uint8* cpu_ptr, Uint8* gpu_ptr, unsigned int size, unsigned int width) {
+void gpuCalc(Enviroment& enviroment, camera& camera, Uint8* cpu_ptr, Uint8* gpu_ptr, unsigned int size, unsigned int width)
+{
     unsigned int NUM_THREADS = 512;
     unsigned int NUM_BLOCKS = (size + NUM_THREADS - 1) / NUM_THREADS;
     kernel <<<NUM_BLOCKS, NUM_THREADS>>> (enviroment, camera, gpu_ptr, size, width);
@@ -60,6 +63,7 @@ void gpuCalc(Enviroment& enviroment, camera& camera, Uint8* cpu_ptr, Uint8* gpu_
     cudaMemcpy(cpu_ptr, gpu_ptr, bytes, cudaMemcpyDeviceToHost);
 }
 
-void gpuFree(Uint8* gpu_ptr) {
+void gpuFree(Uint8* gpu_ptr)
+{
     cudaFree(gpu_ptr);
 }

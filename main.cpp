@@ -14,14 +14,16 @@ using std::vector;
 using std::string;
 using std::to_string;
 
-class DebugInformation {
+class DebugInformation
+{
 public:
 
     sf::Text text;
     sf::Font CourierPrime_Regular;
     string information = "pos";
 
-    DebugInformation() {
+    DebugInformation()
+    {
         CourierPrime_Regular.loadFromFile("CourierPrime-Regular.ttf");
         text.setFont(CourierPrime_Regular);
         text.setCharacterSize(14);
@@ -29,7 +31,8 @@ public:
         text.setPosition(5, 0);
     }
 
-    void draw(sf::RenderWindow& window, camera& camera, unsigned int size, unsigned int width, Sphere* cpu_spheres, unsigned int num) {
+    void draw(sf::RenderWindow& window, camera& camera, unsigned int size, unsigned int width, Sphere* cpu_spheres, unsigned int num)
+    {
         string info;
         info += "Camera Position " + vec3ToString(camera.position) + "\n";
         info += "Camera Direction" + vec3ToString(camera.base_direction) + "\n";
@@ -69,7 +72,8 @@ public:
     }
 };
 
-int main() {
+int main()
+{
     unsigned int screen_width = 1920;
     unsigned int screen_height = 1080;
     sf::RenderWindow window(sf::VideoMode(screen_width, screen_height), "GPU Accelerated Ray Tracing", sf::Style::Fullscreen | sf::Style::Close);
@@ -86,7 +90,8 @@ int main() {
     //enviroment.addSphere(Sphere(vec3( 1.8f, 0.0f, 4.0f), 1.0f, 0, 0, 255));
 
     srand(NULL);
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < 20; i++)
+    {
         enviroment.addSphere(Sphere(vec3(-10.0f + i, 0.0f, 6.0f), 0.2f + (static_cast<float>(rand()) / RAND_MAX), rand() % 255, rand() % 255, rand() % 255));
     }
 
@@ -105,13 +110,18 @@ int main() {
     float time = 0.0f;
 
     sf::Event event;
-    while (window.isOpen()) {
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed) {
+    while (window.isOpen())
+    {
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+            {
                 window.close();
             }
-            if (event.type == sf::Event::KeyPressed) {
-                if (event.key.code == sf::Keyboard::Escape) {
+            if (event.type == sf::Event::KeyPressed)
+            {
+                if (event.key.code == sf::Keyboard::Escape)
+                {
                     cout << "ESCAPE KEY PRESSED\n\n\n\n";
                     window.close();
                 }
@@ -120,10 +130,12 @@ int main() {
 
         time += 0.01;
 
-        for (int i = 0; i < enviroment.num_spheres; i++) {
+        for (int i = 0; i < enviroment.num_spheres; i++)
+        {
             Sphere& sphere = enviroment.cpu_spheres[i];
             sphere.position.y = sin(time + i) * 2.0f;
         }
+
         enviroment.updateSpheres();
 
         camera.control(0.05f);

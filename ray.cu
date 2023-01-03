@@ -2,13 +2,14 @@
 
 __host__ __device__ ray::ray() {}
 
-__host__ __device__ ray::ray(vec3 _origin, vec3 _direction) {
+__host__ __device__ ray::ray(vec3 _origin, vec3 _direction)
+{
     origin = _origin;
     direction = _direction;
 }
 
-__host__ __device__ void ray::trace(const Sphere* gpu_spheres, unsigned int size) {
-    
+__host__ __device__ void ray::trace(const Sphere* gpu_spheres, unsigned int size)
+{    
     r = 0;
     g = 180 - 75 * direction.y;
     b = 255;
@@ -26,7 +27,8 @@ __host__ __device__ void ray::trace(const Sphere* gpu_spheres, unsigned int size
     }
 }
 
-__host__ __device__ float ray::intersectSphere(const Sphere& sphere) {
+__host__ __device__ float ray::intersectSphere(const Sphere& sphere)
+{
     vec3 A = origin;
     vec3 B = direction;
     vec3 C = sphere.position;

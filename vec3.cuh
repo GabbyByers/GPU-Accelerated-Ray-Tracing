@@ -4,7 +4,8 @@
 #include <cuda_runtime.h>
 #include "matrix.cuh"
 
-class vec3 {
+class vec3
+{
 public:
     float x = 0.0f;
     float y = 0.0f;

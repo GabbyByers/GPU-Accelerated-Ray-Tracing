@@ -3,7 +3,8 @@
 
 #include "vec3.cuh"
 
-class camera {
+class camera
+{
 public:
 	vec3 position = vec3(0.0f, 0.0f, 0.0f);
 	vec3 base_direction = vec3(0.0f, 0.0f, 1.0f);

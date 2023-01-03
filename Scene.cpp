@@ -1,6 +1,7 @@
 #include "Scene.h"
 
-Scene::Scene(unsigned int screen_width, unsigned int screen_height) {
+Scene::Scene(unsigned int screen_width, unsigned int screen_height)
+{
     float w = static_cast<float>(screen_width);
     float h = static_cast<float>(screen_height);
     quad.push_back(sf::Vertex(sf::Vector2f(0, 0), sf::Vector2f(0, 0)));
@@ -12,7 +13,8 @@ Scene::Scene(unsigned int screen_width, unsigned int screen_height) {
     width = static_cast<unsigned int>(image.getSize().x);
 }
 
-void Scene::draw(sf::RenderWindow& window) {
+void Scene::draw(sf::RenderWindow& window)
+{
     texture.loadFromImage(image);
     window.draw(&quad[0], quad.size(), sf::Quads, &texture);
 }
