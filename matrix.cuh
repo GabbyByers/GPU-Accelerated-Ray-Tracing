@@ -5,8 +5,8 @@
 
 class matrix {
 public:
-    float** cpu_matrix = nullptr;
-    float** gpu_matrix = nullptr;
+    float* cpu_matrix = nullptr;
+    float* gpu_matrix = nullptr;
 
     matrix();
 
