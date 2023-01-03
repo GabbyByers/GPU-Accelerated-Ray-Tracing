@@ -4,7 +4,8 @@
 #include "cuda_runtime.h"
 #include "sphere.cuh"
 
-class Enviroment {
+class Enviroment
+{
 public:
     unsigned int num_spheres = 0;
 

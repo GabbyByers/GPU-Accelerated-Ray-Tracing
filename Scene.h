@@ -4,7 +4,8 @@
 #include <vector>
 using std::vector;
 
-class Scene {
+class Scene
+{
 public:
     vector<sf::Vertex> quad;
     sf::Texture texture;

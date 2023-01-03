@@ -4,7 +4,8 @@
 #include "vec3.cuh"
 typedef unsigned char Uint8;
 
-class Sphere {
+class Sphere
+{
 public:
 	float radius = 1.0;
 	vec3 position;

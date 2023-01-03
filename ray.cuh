@@ -5,7 +5,8 @@
 #include "kernel.cuh"
 #include "sphere.cuh"
 
-class ray {
+class ray
+{
 public:
     vec3 origin;
     vec3 direction;
