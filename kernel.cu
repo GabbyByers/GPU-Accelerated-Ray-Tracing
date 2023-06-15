@@ -12,11 +12,11 @@ __global__ void kernel(Enviroment enviroment, camera camera, Uint8* gpu_ptr, uns
 {
     unsigned int i = (blockIdx.x * blockDim.x) + threadIdx.x;
     if (i >= size) { return; }
-    
+
     Uint8* RGBA = gpu_ptr + (i * 4);
-    Uint8& r = *   RGBA;
-    Uint8& g = * ++RGBA;
-    Uint8& b = * ++RGBA;
+    Uint8& r = *RGBA;
+    Uint8& g = *++RGBA;
+    Uint8& b = *++RGBA;
 
     unsigned int x = i % width;
     unsigned int y = i / width;
@@ -34,7 +34,7 @@ __global__ void kernel(Enviroment enviroment, camera camera, Uint8* gpu_ptr, uns
     vec3 base_direction = vec3(u, v, camera.depth);
 
     vec3 real_direction = base_direction.vectorMatrixMultiplication(camera.rotation);
-    
+
     //ray ray(origin, real_direction);
     ray ray(origin, base_direction);
     ray.trace(enviroment.gpu_spheres, enviroment.num_spheres);
@@ -57,7 +57,7 @@ void gpuCalc(Enviroment& enviroment, camera& camera, Uint8* cpu_ptr, Uint8* gpu_
 {
     unsigned int NUM_THREADS = 512;
     unsigned int NUM_BLOCKS = (size + NUM_THREADS - 1) / NUM_THREADS;
-    kernel <<<NUM_BLOCKS, NUM_THREADS>>> (enviroment, camera, gpu_ptr, size, width);
+    kernel << <NUM_BLOCKS, NUM_THREADS >> > (enviroment, camera, gpu_ptr, size, width);
 
     unsigned int bytes = size * 4;
     cudaMemcpy(cpu_ptr, gpu_ptr, bytes, cudaMemcpyDeviceToHost);

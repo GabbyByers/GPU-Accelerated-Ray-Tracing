@@ -6,7 +6,7 @@
 #include "Scene.h"
 #include "kernel.cuh"
 #include "vec3.cuh"
-#include "camera.cuh"
+#include "Camera.cuh"
 #include "sphere.cuh"
 #include "Enviroment.cuh"
 using std::cout;
@@ -36,7 +36,7 @@ public:
         string info;
         info += "Camera Position " + vec3ToString(camera.position) + "\n";
         info += "Camera Direction" + vec3ToString(camera.base_direction) + "\n";
-        
+
         // U V
         sf::Vector2i mouse = sf::Mouse::getPosition(window);
         float u = mouse.x / static_cast<float>(width);
@@ -45,14 +45,14 @@ public:
         v = (2.0f * v) - 1.0f;
         u = u * (width / static_cast<float>(size / width));
         v = -v;
-        
+
         info += "U: ";
         if (u >= 0) { info += " "; }
         info += to_string(u);
         info += " V: ";
         if (v >= 0) { info += " "; }
         info += to_string(v) + "\n";
-        
+
         text.setString(info);
         window.draw(text);
     }
@@ -77,13 +77,13 @@ int main()
     unsigned int screen_width = 1920;
     unsigned int screen_height = 1080;
     sf::RenderWindow window(sf::VideoMode(screen_width, screen_height), "GPU Accelerated Ray Tracing", sf::Style::Fullscreen | sf::Style::Close);
-    
+
     Scene scene(screen_width, screen_height);
     camera camera;
-    
+
     Uint8* cpu_ptr = const_cast<Uint8*>(scene.image.getPixelsPtr());
     Uint8* gpu_ptr = gpuSetup(cpu_ptr, scene.size);
-    
+
     Enviroment enviroment;
     //enviroment.addSphere(Sphere(vec3(-2.5f, 0.0f, 4.0f), 1.0f, 255, 0, 0));
     //enviroment.addSphere(Sphere(vec3( 0.0f, 0.0f, 4.0f), 1.0f, 0, 255, 0));
@@ -144,7 +144,7 @@ int main()
         debugInformation.draw(window, camera, scene.size, scene.width, enviroment.cpu_spheres, enviroment.num_spheres);
         window.display();
     }
-    
+
     gpuFree(gpu_ptr);
     enviroment.destroy();
     return 69;

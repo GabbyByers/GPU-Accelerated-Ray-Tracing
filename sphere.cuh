@@ -14,9 +14,15 @@ public:
 	Uint8 g = 0;
 	Uint8 b = 0;
 
-	Sphere();
+	Sphere() {}
 
-	Sphere(vec3 _position, float _radius, Uint8 _r, Uint8 _g, Uint8 _b);
+	Sphere(vec3 _position, float _radius, Uint8 _r, Uint8 _g, Uint8 _b) {
+		position = _position;
+		radius = _radius;
+		r = _r;
+		g = _g;
+		b = _b;
+	}
 };
 
 #endif
